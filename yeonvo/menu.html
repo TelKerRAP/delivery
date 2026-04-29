@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YEO Cocina Japonesa</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background:#0f0f0f;
+    color:#fff;
+}
+
+/* HERO */
+.hero{
+    height:90vh;
+    background:url('https://images.unsplash.com/photo-1553621042-f6e147245754') center/cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+.hero h1{
+    font-size:50px;
+}
+.hero p{
+    font-size:20px;
+    opacity:0.8;
+}
+
+/* SECCIONES */
+.section{
+    padding:60px 20px;
+    max-width:1200px;
+    margin:auto;
+}
+
+h2{
+    margin-bottom:30px;
+    border-left:5px solid #ff2e63;
+    padding-left:10px;
+}
+
+/* TARJETAS */
+.menu{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    transition:0.3s;
+}
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.price{
+    color:#ff2e63;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <h1>YEO Cocina Japonesa</h1>
+        <p>Alta cocina japonesa en Nuevo Vallarta</p>
+    </div>
+</section>
+
+<!-- RAW BAR -->
+<section class="section">
+<h2>🍱 Raw Bar</h2>
+<div class="menu">
+<div class="card">
+<h3>Yuzu Hamachi</h3>
+<p>Hamachi con yuzu, trufa y parmesano</p>
+<span class="price">$390</span>
+</div>
+
+<div class="card">
+<h3>Truffled King Salmon</h3>
+<p>Salmón con miso seco y trufa fresca</p>
+<span class="price">$330</span>
+</div>
+
+<div class="card">
+<h3>Kampachi Tartar</h3>
+<p>Tartar con mayo spicy y wonton</p>
+<span class="price">$290</span>
+</div>
+</div>
+</section>
+
+<!-- CALIENTES -->
+<section class="section">
+<h2>🔥 Platillos Calientes</h2>
+<div class="menu">
+<div class="card">
+<h3>Gyoza Trufada</h3>
+<p>Rellena de wagyu con aceite de trufa</p>
+<span class="price">$275</span>
+</div>
+
+<div class="card">
+<h3>Edamame Sweet Spicy</h3>
+<p>Con salsa szechuan y chile de árbol</p>
+<span class="price">$169</span>
+</div>
+
+<div class="card">
+<h3>Crispy Rice Cake</h3>
+<p>Arroz frito con atún o salmón spicy</p>
+<span class="price">$260</span>
+</div>
+</div>
+</section>
+
+<!-- RAMEN -->
+<section class="section">
+<h2>🍜 Ramen & Noodles</h2>
+<div class="menu">
+<div class="card">
+<h3>Shoyu Ramen</h3>
+<p>Caldo de soya con cerdo y huevo</p>
+<span class="price">$320</span>
+</div>
+
+<div class="card">
+<h3>Lobster Ramen</h3>
+<p>Ramen con langosta y leche de soya</p>
+<span class="price">$450</span>
+</div>
+
+<div class="card">
+<h3>Yakimeshi</h3>
+<p>Arroz frito estilo japonés</p>
+<span class="price">$199+</span>
+</div>
+</div>
+</section>
+
+<!-- SUSHI -->
+<section class="section">
+<h2>🍣 Sushi & Rolls</h2>
+<div class="menu">
+<div class="card">
+<h3>Wagyu Maki</h3>
+<p>Rollo con wagyu y trufa</p>
+<span class="price">$305</span>
+</div>
+
+<div class="card">
+<h3>Dragon Roll</h3>
+<p>Camarón, anguila y salsa dulce</p>
+<span class="price">$305</span>
+</div>
+
+<div class="card">
+<h3>Monkey Roll</h3>
+<p>Tempura con plátano y salsa de cacahuate</p>
+<span class="price">$225</span>
+</div>
+</div>
+</section>
+
+<!-- CORTES -->
+<section class="section">
+<h2>🥩 Robatayaki & Cortes</h2>
+<div class="menu">
+<div class="card">
+<h3>Wagyu A5</h3>
+<p>Carne premium japonesa</p>
+<span class="price">$2390</span>
+</div>
+
+<div class="card">
+<h3>King Salmon</h3>
+<p>Salmón a la parrilla con ponzu</p>
+<span class="price">$470</span>
+</div>
+
+<div class="card">
+<h3>Rib Eye</h3>
+<p>Corte a la parrilla estilo robata</p>
+<span class="price">$990</span>
+</div>
+</div>
+</section>
+
+</body>
+</html>
