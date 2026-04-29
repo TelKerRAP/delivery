@@ -1,0 +1,95 @@
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:#0f0f0f;
+    color:#fff;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    background:#111;
+    border-bottom:1px solid #222;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#00ffcc;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.hero h1{
+    font-size:40px;
+}
+
+.hero p{
+    color:#aaa;
+}
+
+/* SECCIONES */
+section{
+    padding:40px 20px;
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+/* TARJETAS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+    background:#222;
+}
+
+.card h3{
+    color:#00ffcc;
+}
+
+/* BOTÓN */
+.btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 15px;
+    background:#00ffcc;
+    color:#000;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    background:#111;
+    border-top:1px solid #222;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .hero h1{
+        font-size:28px;
+    }
+}

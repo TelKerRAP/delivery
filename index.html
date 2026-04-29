@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Deluxe</title>
+<link rel="stylesheet" href="stilos.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🚀 Delivery Deluxe</div>
+</header>
+
+<section class="hero">
+    <h1>Delivery Premium en tu Ciudad</h1>
+    <p>Restaurantes, supermercado y pedidos personalizados en un solo lugar</p>
+</section>
+
+<!-- RESTAURANTES -->
+<section>
+    <h2>🍽️ Restaurantes</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Yeo</h3>
+            <ul>
+                <li>🍜 Ramen Especial</li>
+                <li>🍣 Sushi Premium</li>
+                <li>🥟 Gyozas</li>
+                <li>🍚 Arroz Oriental</li>
+            </ul>
+            <a href="#" class="btn" onclick="ordenar('Yeo')">Pedir</a>
+        </div>
+
+        <div class="card">
+            <h3>Tarantella</h3>
+            <ul>
+                <li>🍕 Pizza Italiana</li>
+                <li>🍝 Pasta Alfredo</li>
+                <li>🥗 Ensalada César</li>
+                <li>🍰 Postres</li>
+            </ul>
+            <a href="#" class="btn" onclick="ordenar('Tarantella')">Pedir</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- SERVICIOS -->
+<section>
+    <h2>🛒 Servicios</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Supermercado</h3>
+            <p>Compras rápidas desde casa</p>
+            <ul>
+                <li>🛍️ Sam's Club</li>
+                <li>🥦 Productos frescos</li>
+                <li>📦 Entrega rápida</li>
+            </ul>
+            <a href="#" class="btn" onclick="ordenar('Supermercado')">Ordenar</a>
+        </div>
+
+        <div class="card">
+            <h3>Pedido Personalizado</h3>
+            <p>¿No está en la lista? Lo conseguimos por ti</p>
+            <ul>
+                <li>📦 Cualquier tienda</li>
+                <li>🚗 Entrega directa</li>
+                <li>⚡ Rápido</li>
+            </ul>
+            <a href="#" class="btn" onclick="ordenar('Personalizado')">Solicitar</a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Delivery Deluxe - Servicio Premium</p>
+</footer>
+
+<script>
+function ordenar(servicio){
+    const numero = "521XXXXXXXXXX"; // CAMBIA TU NÚMERO
+    const mensaje = `Hola, quiero hacer un pedido de: ${servicio}`;
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
