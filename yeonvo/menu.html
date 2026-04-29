@@ -1,27 +1,21 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="Style.css">
-<script src="Script.js" defer></script>
-
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YEO Cocina Japonesa</title>
+
+<link rel="stylesheet" href="Style.css">
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" rel="stylesheet">
+
+<script src="Script.js" defer></script>
 </head>
 
 <body>
-    <!-- Contenedor del mapa -->
-    <div id="map"></div>
-    <script>
-        // Inicializar el mapa
-        mapboxgl.accessToken = 'pk.eyJ1IjoidGVsa2VycmFwIiwiYSI6ImNtb2puNW9rODAwYjUyb3BzZ3UzbnQ3NHAifQ.39JCFtAI5kr9I3-FSmmGmw';
-        const map = new mapboxgl.Map({
-            container: 'map', // ID del contenedor
-            style: 'mapbox://styles/mapbox/streets-v12', // Estilo del mapa
-            center: [-74.5, 40], // Coordenadas [longitud, latitud]
-            zoom: 9 // Nivel de zoom
-        });
-    </script>
+
 <!-- HEADER -->
 <div class="header">
     <h3>YEO</h3>
@@ -173,6 +167,7 @@
 
 <!-- CARRITO -->
 <div class="cart" id="cart">
+
 <h2>Tu Pedido</h2>
 
 <div id="items"></div>
@@ -182,38 +177,23 @@ Total: $<span id="total">0</span>
 </div>
 
 <br>
+
 <input type="text" id="nombre" placeholder="Tu nombre" style="width:100%;padding:10px;margin-bottom:10px;">
+
+<!-- MAPBOX -->
 <div id="geocoder"></div>
+<div id="map"></div>
 
-<div id="map" style="height:200px; margin-top:10px; border-radius:10px;"></div>
-
-<p id="direccionConfirmada" style="font-size:12px;opacity:0.7;"></p>
+<p id="direccionConfirmada"></p>
 
 <button onclick="enviarPedido()">Enviar por WhatsApp</button>
 <button onclick="toggleCart()">Agregar Mas</button>
-<div class="cart" id="cart">
-
-<h2>Tu Pedido</h2>
-
-<div id="items"></div>
-
-<div class="total">
-Total: $<span id="total">0</span>
-</div>
-
-<input type="text" id="nombre" placeholder="Tu nombre">
-
-<!-- 👇 AQUÍ VA MAPBOX -->
-<div id="geocoder"></div>
-
-<div id="map" style="height:200px; margin-top:10px; border-radius:10px;"></div>
-
-<p id="direccionConfirmada" style="font-size:12px;opacity:0.7;"></p>
-
-<button onclick="enviarPedido()">Enviar</button>
 
 </div>
-</div>
+
+<!-- SCRIPTS MAPBOX (EN ORDEN CORRECTO) -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
 
 </body>
 </html>
