@@ -106,3 +106,23 @@ button{
     margin-top:20px;
     font-size:20px;
 }
+
+.location-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* barra de búsqueda */
+#geocoder{
+    width: 100%;
+}
+
+/* MAPA */
+#map{
+    height: 200px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 5px;
+}
