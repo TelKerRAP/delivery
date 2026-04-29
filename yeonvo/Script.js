@@ -3,7 +3,7 @@ let carrito = [];
 // MAPBOX GLOBALS
 let mapa, marker;
 let direccionTexto = "";
-let ubicacion = {lat:null, lng:null};
+let ubicacion = { lat: null, lng: null };
 
 function toggleCart(){
     document.getElementById("cart").classList.toggle("active");
@@ -58,56 +58,61 @@ function enviarPedido(){
     window.open(url, "_blank");
 }
 
-/* ===================== MAPBOX ===================== */
+/* ================= MAPBOX ================= */
 
-mapboxgl.accessToken = 'TU_TOKEN_AQUI';
+mapboxgl.accessToken = 'pk.eyJ1IjoidGVsa2VycmFwIiwiYSI6ImNtb2puNW9rODAwYjUyb3BzZ3UzbnQ3NHAifQ.39JCFtAI5kr9I3-FSmmGmw';
 
 function initMap(){
 
     mapa = new mapboxgl.Map({
-        container:'map',
-        style:'mapbox://styles/mapbox/dark-v11',
-        center:[-105.2253,20.6534],
-        zoom:13
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [-105.2253, 20.6534],
+        zoom: 13
     });
 
-    marker = new mapboxgl.Marker({draggable:true})
-        .setLngLat([-105.2253,20.6534])
+    marker = new mapboxgl.Marker({ draggable: true })
+        .setLngLat([-105.2253, 20.6534])
         .addTo(mapa);
 
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        marker:false,
-        placeholder:"Escribe tu dirección...",
-        countries:"mx",
-        language:"es"
+        marker: false,
+        placeholder: "Escribe tu dirección...",
+        countries: "mx",
+        language: "es"
     });
 
-    document.getElementById('geocoder').appendChild(geocoder.onAdd(mapa));
+    document.getElementById("geocoder").appendChild(
+        geocoder.onAdd(mapa)
+    );
 
-    // Selección de dirección
-    geocoder.on('result', (e)=>{
+    geocoder.on("result", (e) => {
+
         const coords = e.result.center;
 
         direccionTexto = e.result.place_name;
-        ubicacion.lat = coords[1];
-        ubicacion.lng = coords[0];
+        ubicacion = {
+            lat: coords[1],
+            lng: coords[0]
+        };
 
         marker.setLngLat(coords);
-        mapa.flyTo({center:coords, zoom:15});
+        mapa.flyTo({ center: coords, zoom: 15 });
 
         document.getElementById("direccionConfirmada").innerText =
             "📍 Dirección: " + direccionTexto;
     });
 
-    // Click en mapa
-    mapa.on('click', (e)=>{
+    mapa.on("click", (e) => {
         ubicacion.lat = e.lngLat.lat;
         ubicacion.lng = e.lngLat.lng;
-
         marker.setLngLat(e.lngLat);
     });
 }
 
-initMap();
+/* 🔥 IMPORTANTE: esperar DOM */
+window.addEventListener("load", () => {
+    initMap();
+});
