@@ -78,10 +78,10 @@ function enviarPedido(){
 
     let nombre = nombreInput.value.trim();
     let telefono = telefonoInput.value.trim();
-    let sucursal = sucursalInput ? sucursalInput.value : "Sin sucursal";
+    let refencias = refenciasInputInput ? refenciasInputInput.value : "";
 
     if(!nombre || !telefono){
-        alert("Completa nombre y teléfono");
+        alert("Completa nombre, teléfono y refencias");
         return;
     }
 
