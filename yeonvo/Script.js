@@ -70,7 +70,7 @@ function enviarPedido(){
 
         let nombre = document.getElementById("nombre")?.value || "";
         let telefono = document.getElementById("telefono")?.value || "";
-        let sucursal = document.getElementById("sucursal")?.value || "Sin sucursal";
+        let referencias = document.getElementById("referencias")?.value ||"";
 
         if(!nombre || !telefono){
             alert("Completa nombre y teléfono");
