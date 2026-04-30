@@ -54,7 +54,7 @@ function enviarPedido(){
 
     texto += `\n💰 Total: $${document.getElementById("total").innerText}`;
 
-    let url = `https://wa.me/523221234567?text=${encodeURIComponent(texto)}`;
+    let url = `https://wa.me/523222373809?text=${encodeURIComponent(texto)}`;
     window.open(url, "_blank");
 }
 
