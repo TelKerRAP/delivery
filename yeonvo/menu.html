@@ -10,7 +10,6 @@
 
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
 <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" rel="stylesheet">
-
 <script src="Script.js" defer></script>
 </head>
 
@@ -174,11 +173,14 @@
 
 <div class="total">
 Total: $<span id="total">0</span>
+
 </div>
 
 <br>
 
-<input type="text" id="nombre" placeholder="Tu nombre" style="width:100%;padding:10px;margin-bottom:10px;">
+<input type="text" id="nombre" placeholder="Tu nombre" style="width:90%; padding:10px;margin-bottom:10px;">
+<input type="text" id="telefono" placeholder="Telefono" style="width:90%; padding:10px;margin-bottom:10px;">
+<input type="text" id="referencias" placeholder="Referencias" style="width:90%; padding:10px;margin-bottom:10px;">
 
 <!-- MAPBOX -->
 <div id="geocoder"></div>
@@ -186,7 +188,7 @@ Total: $<span id="total">0</span>
 
 <p id="direccionConfirmada"></p>
 
-<button onclick="enviarPedido()">Enviar por WhatsApp</button>
+<button onclick="enviarPedido()">Confirmar Pedido</button>
 <button onclick="toggleCart()">Agregar Mas</button>
 
 </div>
