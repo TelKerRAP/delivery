@@ -1,12 +1,21 @@
 let carrito = [];
 
-// MAPBOX GLOBALS
+// ================= MAPBOX GLOBALS =================
 let mapa;
 let marker;
+
+// 🔥 UBICACIÓN CORRECTA (IMPORTANTE)
+let ubicacion = {
+    lat: NaN,
+    lng: NaN
+};
+
 let direccionTexto = "";
-let ubicacion = { lat: null, lng: null };
+let direccionAuto = {};
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGVsa2VycmFwIiwiYSI6ImNtb2puNW9rODAwYjUyb3BzZ3UzbnQ3NHAifQ.39JCFtAI5kr9I3-FSmmGmw';
+
+// ================= CARRITO =================
 
 function toggleCart(){
     document.getElementById("cart").classList.toggle("active");
@@ -41,92 +50,93 @@ function render(){
     document.getElementById("total").innerText = total;
     document.getElementById("count").innerText = carrito.length;
 }
-function formatearDireccion(placeName){
-    let partes = placeName.split(",");
 
-    return {
-        calle: partes[0] || "",
-        colonia: partes[1] || "",
-        ciudad: partes[2] || ""
-    };
-}
+// ================= WHATSAPP =================
 
 function enviarPedido(){
 
-    let dir = formatearDireccion(direccionTexto);
+    try {
 
-    let nombre = document.getElementById("nombre").value;
-    let telefono = document.getElementById("telefono").value;
+        // 🔴 VALIDACIONES
+        if(carrito.length === 0){
+            alert("Agrega productos al carrito");
+            return;
+        }
 
-    let sucursal = document.getElementById("sucursal").value;
+        if(isNaN(ubicacion.lat) || isNaN(ubicacion.lng)){
+            alert("Selecciona una ubicación en el mapa");
+            return;
+        }
 
-    // Inputs manuales (fallback si el usuario los llena)
-    let calleManual = document.getElementById("calle")?.value || "";
-    let numero = document.getElementById("numero")?.value || "";
-    let coloniaManual = document.getElementById("colonia")?.value || "";
-    let referencias = document.getElementById("referencias")?.value || "";
+        let nombre = document.getElementById("nombre")?.value || "";
+        let telefono = document.getElementById("telefono")?.value || "";
+        let sucursal = document.getElementById("sucursal")?.value || "Sin sucursal";
 
-    if(carrito.length === 0){
-        alert("Agrega productos al carrito");
-        return;
-    }
+        if(!nombre || !telefono){
+            alert("Completa nombre y teléfono");
+            return;
+        }
 
-    if(!nombre || !telefono){
-        alert("Completa nombre y teléfono");
-        return;
-    }
+        // 🛒 PRODUCTOS
+        let productosTexto = "";
+        let total = 0;
 
-    let productosTexto = "";
-    let total = 0;
+        carrito.forEach(item => {
+            productosTexto += `• 1x ${item.nombre} ($${item.precio})\n`;
+            total += item.precio;
+        });
 
-    carrito.forEach(item => {
-        productosTexto += `*1x* ${item.nombre} ($${item.precio})\n\n`;
-        total += item.precio;
-    });
+        // 📍 UBICACIÓN
+        let mapsLink = `https://www.google.com/maps/search/?api=1&query=${ubicacion.lat},${ubicacion.lng}`;
 
-    // 🧠 usa Mapbox si existe, si no usa manual
-    let calleFinal = dir.calle || calleManual;
-    let coloniaFinal = dir.colonia || coloniaManual;
+        // 🧠 MENSAJE FINAL
+        let texto = `🏪 Sucursal: ${sucursal}
 
-    let texto = `
-Sucursal ${sucursal}
+👤 Nombre: ${nombre}
+📱 Teléfono: ${telefono}
 
-*Nombre:* ${nombre}
-*Celular:* ${telefono}
+----------------------
 
----
 📍 Dirección
-* *Calle:* ${calleFinal}
-* *Número:* ${numero}
-* *Colonia:* ${coloniaFinal}
-* *Referencias:* ${referencias}
-* *Ubicación:* https://www.google.com/maps/search/?api=1&query=${ubicacion.lat},${ubicacion.lng}
+• Calle: ${direccionAuto.calle || "No detectada"}
+• Colonia: ${direccionAuto.colonia || "No detectada"}
+• Ciudad: ${direccionAuto.ciudad || "No detectada"}
+• Ubicación: ${mapsLink}
 
----
+----------------------
+
 💵 Resumen
-* *Productos:* $${total}
-* *Envío:* 🚨 Por definir 🚨
-* *Total a pagar:* $${total} + envío
-* Cliente pagará en TRANSFERENCIA
+• Productos: $${total}
+• Envío: Por definir
+• Total: $${total}
+• Pago: Transferencia
 
----
-📋 Pedido
-${productosTexto}
-`;
+----------------------
 
-    let url = `https://wa.me/523222373809?text=${encodeURIComponent(texto)}`;
+🛒 Pedido
+${productosTexto}`;
 
-    window.open(url, "_blank");
+        // 🔥 URL WHATSAPP
+        let url = `https://wa.me/523222373809?text=${encodeURIComponent(texto)}`;
+
+        console.log("LINK WHATSAPP:", url); // debug
+
+        // ✅ ABRIR SIEMPRE
+        window.open(url, "_blank");
+
+    } catch(error){
+        console.error("Error en enviarPedido:", error);
+        alert("Error al generar pedido (ver consola)");
+    }
 }
-
-/* ================= MAPBOX ================= */
+// ================= MAPBOX =================
 
 function initMap(){
 
     mapa = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v11',
-        center: [-105.2253, 20.6534], // Nuevo Vallarta
+        center: [-105.2253, 20.6534],
         zoom: 13
     });
 
@@ -134,7 +144,6 @@ function initMap(){
         .setLngLat([-105.2253, 20.6534])
         .addTo(mapa);
 
-    // GEOCODER
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
@@ -148,55 +157,78 @@ function initMap(){
         geocoder.onAdd(mapa)
     );
 
-    // CUANDO BUSCAN DIRECCIÓN
+    // 🔍 BÚSQUEDA
     geocoder.on("result", (e) => {
 
         const coords = e.result.center;
 
+        ubicacion = { lat: coords[1], lng: coords[0] };
         direccionTexto = e.result.place_name;
-
-        ubicacion = {
-            lat: coords[1],
-            lng: coords[0]
-        };
 
         marker.setLngLat(coords);
         mapa.flyTo({ center: coords, zoom: 15 });
 
-        document.getElementById("direccionConfirmada").innerText =
-            "📍 " + direccionTexto;
+        procesarDireccion(e.result);
+        actualizarUI();
     });
 
-    // CLICK EN MAPA
+    // 🖱 CLICK EN MAPA
     mapa.on("click", async (e) => {
 
         const lng = e.lngLat.lng;
         const lat = e.lngLat.lat;
 
+        ubicacion = { lat, lng };
         marker.setLngLat([lng, lat]);
 
-        ubicacion = { lat, lng };
-
-        // 🔥 REVERSE GEOCODING (obtiene dirección real)
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}`;
 
         try {
             const res = await fetch(url);
             const data = await res.json();
 
-            direccionTexto = data.features[0]?.place_name || "Dirección no encontrada";
+            let place = data.features?.[0];
 
-            document.getElementById("direccionConfirmada").innerText =
-                "📍 " + direccionTexto;
+            if(!place) return;
 
-        } catch (error) {
-            console.error("Error obteniendo dirección:", error);
+            direccionTexto = place.place_name;
+
+            procesarDireccion(place);
+            actualizarUI();
+
+        } catch (err) {
+            console.error("Error Mapbox:", err);
         }
     });
 }
 
-/* ================= INICIO SEGURO ================= */
+// ================= UI =================
 
-window.addEventListener("DOMContentLoaded", () => {
-    initMap();
-});
+function actualizarUI(){
+    document.getElementById("direccionConfirmada").innerText =
+        "📍 " + direccionTexto;
+}
+
+// ================= DIRECCIÓN =================
+
+function procesarDireccion(place){
+
+    let ctx = place?.context || [];
+
+    direccionAuto = {
+        calle: place?.text || "",
+        colonia:
+            ctx.find(c => c.id.includes("neighborhood"))?.text ||
+            ctx.find(c => c.id.includes("locality"))?.text ||
+            ctx.find(c => c.id.includes("place"))?.text ||
+            "",
+        ciudad:
+            ctx.find(c => c.id.includes("place"))?.text ||
+            ctx.find(c => c.id.includes("region"))?.text ||
+            ""
+    };
+}
+
+// ================= INICIO =================
+
+window.addEventListener("DOMContentLoaded", initMap);
