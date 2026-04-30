@@ -55,42 +55,55 @@ function render(){
 
 function enviarPedido(){
 
-    try {
+    // 🔴 VALIDACIONES
+    if(carrito.length === 0){
+        alert("Agrega productos al carrito");
+        return;
+    }
 
-        // 🔴 VALIDACIONES
-        if(carrito.length === 0){
-            alert("Agrega productos al carrito");
-            return;
-        }
+    if(isNaN(ubicacion.lat) || isNaN(ubicacion.lng)){
+        alert("Selecciona una ubicación en el mapa");
+        return;
+    }
 
-        if(isNaN(ubicacion.lat) || isNaN(ubicacion.lng)){
-            alert("Selecciona una ubicación en el mapa");
-            return;
-        }
+    // 🧠 EVITAR ERRORES DE HTML
+    let nombreInput = document.getElementById("nombre");
+    let telefonoInput = document.getElementById("telefono");
+    let refenciasInput = document.getElementById("refencias");
 
-        let nombre = document.getElementById("nombre")?.value || "";
-        let telefono = document.getElementById("telefono")?.value || "";
-        let referencias = document.getElementById("referencias")?.value ||"";
+    if(!nombreInput || !telefonoInput){
+        alert("Faltan campos en el HTML (nombre o teléfono)");
+        return;
+    }
 
-        if(!nombre || !telefono){
-            alert("Completa nombre y teléfono");
-            return;
-        }
+    let nombre = nombreInput.value.trim();
+    let telefono = telefonoInput.value.trim();
+    let sucursal = sucursalInput ? sucursalInput.value : "Sin sucursal";
 
-        // 🛒 PRODUCTOS
-        let productosTexto = "";
-        let total = 0;
+    if(!nombre || !telefono){
+        alert("Completa nombre y teléfono");
+        return;
+    }
 
-        carrito.forEach(item => {
-            productosTexto += `• 1x ${item.nombre} ($${item.precio})\n`;
-            total += item.precio;
-        });
+    // 🛒 PRODUCTOS
+    let productosTexto = "";
+    let total = 0;
 
-        // 📍 UBICACIÓN
-        let mapsLink = `https://www.google.com/maps/search/?api=1&query=${ubicacion.lat},${ubicacion.lng}`;
+    carrito.forEach(item => {
+        productosTexto += `• 1x ${item.nombre} ($${item.precio})\n`;
+        total += item.precio;
+    });
 
-        // 🧠 MENSAJE FINAL
-        let texto = `🏪 Sucursal: ${sucursal}
+    // 📍 UBICACIÓN
+    let mapsLink = `https://www.google.com/maps/search/?api=1&query=${ubicacion.lat},${ubicacion.lng}`;
+
+    // 🧠 DIRECCIÓN SEGURA
+    let calle = direccionAuto?.calle || "No detectada";
+    let colonia = direccionAuto?.colonia || "No detectada";
+    let ciudad = direccionAuto?.ciudad || "No detectada";
+
+    // 📩 MENSAJE
+    let texto = `🏪 Sucursal: ${sucursal}
 
 👤 Nombre: ${nombre}
 📱 Teléfono: ${telefono}
@@ -98,9 +111,9 @@ function enviarPedido(){
 ----------------------
 
 📍 Dirección
-• Calle: ${direccionAuto.calle || "No detectada"}
-• Colonia: ${direccionAuto.colonia || "No detectada"}
-• Ciudad: ${direccionAuto.ciudad || "No detectada"}
+• Calle: ${calle}
+• Colonia: ${colonia}
+• Ciudad: ${ciudad}
 • Ubicación: ${mapsLink}
 
 ----------------------
@@ -116,19 +129,13 @@ function enviarPedido(){
 🛒 Pedido
 ${productosTexto}`;
 
-        // 🔥 URL WHATSAPP
-        let url = `https://wa.me/523222373809?text=${encodeURIComponent(texto)}`;
+    let url = `https://wa.me/523222373809?text=${encodeURIComponent(texto)}`;
 
-        console.log("LINK WHATSAPP:", url); // debug
-
-        // ✅ ABRIR SIEMPRE
-        window.open(url, "_blank");
-
-    } catch(error){
-        console.error("Error en enviarPedido:", error);
-        alert("Error al generar pedido (ver consola)");
-    }
+    // 🔥 ESTO SIEMPRE FUNCIONA
+    window.open(url, "_blank");
 }
+
+
 // ================= MAPBOX =================
 
 function initMap(){
